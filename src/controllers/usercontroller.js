@@ -3,8 +3,9 @@ const app = express();
 const user = require('../models/usermodel');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
-
+const secretkey = process.env.SECRETKEY;
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -73,5 +74,42 @@ app.post('/signup', async (req, res) => {
     });
   }
 });
+
+
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Enter Email and Password"
+      })
+    }
+    const existinguser = await user.findOne({ email });
+    if (!email) {
+      return res.status(400).json({
+        message: "User Not Exists"
+      })
+    }
+    const isMatch = await bcrypt.compare(password, existinguser.password);
+    if (!isMatch) {
+      return res.status(400).json({
+        message: "Password Not Match"
+      })
+    }
+    const token = jwt.sign({
+      id: existinguser._id
+    }, secretkey, { expiresIn: '90d' });
+    return res.status(201).json({
+      message: "Sign In Success",
+      response: existinguser,
+      token: token
+    })
+  }
+  catch (ex) {
+    return res.status(500).json({
+      message: "internal server error"
+    })
+  }
+})
 
 module.exports = app;

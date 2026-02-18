@@ -193,7 +193,7 @@ footer{
 <body>
 
 <nav>
-  <div><b>Bajrang.dev</b></div>
+  <div><b>Kapil.dev</b></div>
   <div>
     <a href="#skills">Skills</a>
     <a href="#about">About</a>
@@ -238,7 +238,7 @@ footer{
 </section>
 
 <footer>
-  ©️ 2026 Bajrang Prajapati | All Rights Reserved
+  ©️ 2026 Kapil Prajapati | All Rights Reserved
 </footer>
 
 <script>
@@ -263,7 +263,7 @@ function scrollToSection(id){
 }
 
 function copyEmail(){
-  navigator.clipboard.writeText("prajapatbaju37@gmail.com");
+  navigator.clipboard.writeText("kapilprajapatkapilprajapat@gmail.com");
   alert("Email Copied ✅");
 }
 

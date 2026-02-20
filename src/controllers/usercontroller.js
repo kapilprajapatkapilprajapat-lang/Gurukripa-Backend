@@ -110,6 +110,33 @@ app.post('/login', async (req, res) => {
       message: "internal server error"
     })
   }
+});
+
+
+app.get('/profile', async (req, res) => {
+  try {
+    const { id } = req.query;
+    if (!id) {
+      return res.status(400).json({
+        message: "Enter ID"
+      })
+    }
+    const existinguser = await user.findById(id);
+    if (!existinguser) {
+      return res.status(400).json({
+        message: "user not found"
+      })
+    }
+    return res.status(200).json({
+      message: "Success",
+      existinguser: existinguser
+    })
+  }
+  catch (ex) {
+    return res.status(500).json({
+      message: "internal server error"
+    })
+  }
 })
 
 module.exports = app;
